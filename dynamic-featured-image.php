@@ -241,7 +241,7 @@ class Dynamic_Featured_Image {
         $this->metabox_title = apply_filters( 'dfi_set_metabox_title', __( 'Featured Image', self::TEXT_DOMAIN ) );
 
         $featured_data  = get_post_meta( $post->ID, 'dfiFeatured', true );
-        $total_featured = count( $featured_data );
+        $total_featured = is_array( $featured_data ) ? count( $featured_data ) : 0;
 
         $default_filter    = array( 'attachment', 'revision', 'nav_menu_item' );
         $this->user_filter = apply_filters( 'dfi_post_type_user_filter', $this->user_filter );
@@ -297,8 +297,8 @@ class Dynamic_Featured_Image {
                     __( $this->metabox_title, self::TEXT_DOMAIN ) . ' ' . $this->get_number_translation( $i ),
                     array( $this, 'featured_meta_box' ),
                     $type,
-                    'side',
-                    'low',
+                    apply_filters( 'dfi_metabox_context', 'side' ),
+                    apply_filters( 'dfi_metabox_priority', 'low' ),
                     array( $featured, $i + 1 )
                 );
 
@@ -311,8 +311,8 @@ class Dynamic_Featured_Image {
                     __( $this->metabox_title, self::TEXT_DOMAIN ) . ' ' . __( 2, self::TEXT_DOMAIN ),
                     array( $this, 'featured_meta_box' ),
                     $type,
-                    'side',
-                    'low',
+                    apply_filters( 'dfi_metabox_context', 'side' ),
+                    apply_filters( 'dfi_metabox_priority', 'low' ),
                     array( null, null )
                 );
 
